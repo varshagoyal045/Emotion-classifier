@@ -1,12 +1,36 @@
-import streamlit as st
+# pip install speechrecognition
+# pip install pyaudio
+# pip install pyttsx3
 
-from pydub import AudioSegment , silence
+import speech_recognition as sr
+import pyttsx3
 
-audio = st.file_uploader("Upload your audio file" , type = ['mp3' , 'wav'])
+r = sr.Recognizer()
+def SpeakText(command):
+    # Initialize the engine
+    engine = pyttsx3.init()
+    engine.say(command)
+    engine.runAndWait()
 
-if audio:
-    audio_segment = AudioSegment.from_file(audio)
-    chunks = silence.split_on_silence(audio_segment , min_silence_len=500 , silence_thresh=audio_segment.dBFS-20 , keep_silence=100)
-    for chunk in chunks:
-        st.write(chunk)
-        # print(chunk)
+while(1):
+    try:
+        # use the microphone as source for input.
+        with sr.Microphone() as source2:
+            r.adjust_for_ambient_noise(source2, duration=0.2)
+             
+            #listens for the user's input
+            audio2 = r.listen(source2)
+            # Using google to recognize audio
+            MyText = r.recognize_google(audio2)
+            MyText = MyText.lower()
+ 
+            print("Did you say ",MyText)
+            SpeakText(MyText)
+
+     except sr.RequestError as e:
+        print("Could not request results; {0}".format(e))
+         
+     except sr.UnknownValueError:
+        print("unknown error occurred")
+    
+             
