@@ -1,0 +1,9 @@
+streamlit
+
+# text translation
+googletrans
+
+# text summarization
+txtai
+PyPDF2
+
