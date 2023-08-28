@@ -6,4 +6,9 @@ googletrans
 # text summarization
 txtai
 PyPDF2
+sumy
 
+# audio-to-text
+speechrecognition
+pyaudio
+pyttsx3
